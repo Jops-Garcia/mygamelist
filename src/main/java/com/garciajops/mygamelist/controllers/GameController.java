@@ -13,7 +13,7 @@ import com.garciajops.mygamelist.dtos.GameMinDTO;
 import com.garciajops.mygamelist.services.GameService;
 
 @RestController
-@RequestMapping(value ="/games")
+@RequestMapping(value = "/games")
 public class GameController {
     @Autowired
     private GameService gameService;

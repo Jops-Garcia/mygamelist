@@ -10,60 +10,49 @@ import jakarta.persistence.Table;
 @Table(name = "tb_belonging")
 public class Belonging {
 
-    @EmbeddedId
-    private BelongingPK id = new BelongingPK();
-    private Integer position;
+	@EmbeddedId
+	private BelongingPK id = new BelongingPK();
 
-    public Belonging(){
-    }
+	private Integer position;
 
-    public Belonging(Game game, GameList list,Integer position) {
-        id.setGame(game);
-        id.setList(list);
+	public void setGame(Game game) {
+		id.setGame(game);
+	}
 
-        this.position = position;
-    }
+	public Game getGame() {
+		return id.getGame();
+	}
 
-    public BelongingPK getId() {
-        return id;
-    }
+	public void setList(GameList list) {
+		id.setList(list);
+	}
 
-    public void setId(BelongingPK id) {
-        this.id = id;
-    }
+	public GameList getList() {
+		return id.getList();
+	}
 
-    public Integer getPosition() {
-        return position;
-    }
+	public Integer getPosition() {
+		return position;
+	}
 
-    public void setPosition(Integer position) {
-        this.position = position;
-    }
+	public void setPosition(Integer position) {
+		this.position = position;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Belonging other = (Belonging) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return Objects.equals(this.position, other.position);
-    }
-
-
-
-
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Belonging other = (Belonging) obj;
+		return Objects.equals(id, other.id);
+	}
 }

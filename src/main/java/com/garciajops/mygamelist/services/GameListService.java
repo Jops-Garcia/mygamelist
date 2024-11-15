@@ -8,7 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.garciajops.mygamelist.dtos.GameListDTO;
 import com.garciajops.mygamelist.entities.GameList;
+import com.garciajops.mygamelist.projections.GameMinProjection;
 import com.garciajops.mygamelist.repositories.GameListRepository;
+import com.garciajops.mygamelist.repositories.GameRepository;
 
 @Service
 public class GameListService {
@@ -16,8 +18,8 @@ public class GameListService {
 	@Autowired
 	private GameListRepository gameListRepository;
 
-	// @Autowired
-	// private GameRepository gameRepository;
+	@Autowired
+	private GameRepository gameRepository;
 
 	@Transactional(readOnly = true)
 	public List<GameListDTO> findAll() {
@@ -25,21 +27,21 @@ public class GameListService {
 		return result.stream().map(GameListDTO::new).toList();
 	}
 
-	// @Transactional
-	// public void move(Long listId, int sourceIndex, int destinationIndex) {
+	@Transactional
+	public void move(Long listId, int sourceIndex, int destinationIndex) {
 
-	// 	List<GameMinProjection> list = gameRepository.searchByList(listId);
+		List<GameMinProjection> list = gameRepository.searchByList(listId);
 
-	// 	GameMinProjection obj = list.remove(sourceIndex);
-	// 	list.add(destinationIndex, obj);
+		GameMinProjection obj = list.remove(sourceIndex);
+		list.add(destinationIndex, obj);
 
-	// 	int min = sourceIndex < destinationIndex ? sourceIndex : destinationIndex;
-	// 	int max = sourceIndex < destinationIndex ? destinationIndex : sourceIndex;
+		int min = sourceIndex < destinationIndex ? sourceIndex : destinationIndex;
+		int max = sourceIndex < destinationIndex ? destinationIndex : sourceIndex;
 
-	// 	for (int i = min; i <= max; i++) {
-	// 		gameListRepository.updateBelongingPosition(listId, list.get(i).getId(), i);
-	// 	}
-	// }
+		for (int i = min; i <= max; i++) {
+			gameListRepository.updateBelongingPosition(listId, list.get(i).getId(), i);
+		}
+	}
 
 	@Transactional(readOnly = true)
 	public GameListDTO findById(Long id) {
